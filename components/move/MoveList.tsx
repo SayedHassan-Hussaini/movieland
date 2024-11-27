@@ -4,6 +4,8 @@ import Pagination from "../common/Pagination";
 import MoveCard from "./MoveCard";
 import { useEffect, useState } from "react";
 import { useCurrentPage } from "@/hooks/useCurrentPage";
+import SearchForm from "../common/SearchFrom";
+import CardItemsSkeleton from "../common/CardItemsSkeleton";
 
 export default function MoveList() {
   const [move, setMove] = useState<any>([]);
@@ -18,7 +20,13 @@ export default function MoveList() {
   }, [currentPage]);
 
   return (
-    <div className="mx-auto max-w-7xl my-20">
+    <div className="mx-auto max-w-7xl px-5 py-10">
+      <div className="flex justify-between items-center mb-10">
+        <h1 className="text-3xl font-bold">Move List</h1>
+        <div className="min-w-[300px]">
+          <SearchForm />
+        </div>
+      </div>
       {moveData?.length > 0 ? (
         <>
           <div className="grid grid-cols-4 gap-4">
@@ -33,7 +41,15 @@ export default function MoveList() {
           </div>
         </>
       ) : (
-        <div>Loafing....</div>
+        <div className="grid grid-cols-4 gap-4">
+          {Array(12)
+            .fill(1)
+            .map((item: any) => (
+              <div key={item?.movie_id} className="md:col-span-1 col-span-4">
+                <CardItemsSkeleton />
+              </div>
+            ))}
+        </div>
       )}
     </div>
   );
