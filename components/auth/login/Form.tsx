@@ -19,11 +19,13 @@ import { DEFAULT_LOGIN_REDIRECT_ROUTE } from "@/constant/routes";
 import { useOrigin } from "@/hooks/use-origin";
 import { toast } from "sonner";
 import { login } from "./action";
+import { Button } from "@/components/ui/button";
 
 export default function LoginForm() {
   const [isPending, startTransition] = useTransition();
   const origin = useOrigin();
   const redirectUrl = `${origin}${DEFAULT_LOGIN_REDIRECT_ROUTE}`;
+  // Default 
   const form = useForm<z.infer<typeof loginFormSchema>>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
@@ -98,9 +100,9 @@ export default function LoginForm() {
         </div>
 
         <div>
-          <button
+          <Button
             type="submit"
-            className="flex w-full items-center justify-center rounded-md bg-xblue-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-xblue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-xblue-600 disabled:cursor-not-allowed"
+            className="flex w-full items-center justify-center rounded-md bg-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 disabled:cursor-not-allowed"
             disabled={isPending}
           >
             {!isPending ? (
@@ -108,7 +110,7 @@ export default function LoginForm() {
             ) : (
               <Loader className="my-0.5 h-5 w-5 animate-spin" />
             )}
-          </button>
+          </Button>
         </div>
       </form>
     </Form>

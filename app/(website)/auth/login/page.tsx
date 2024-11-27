@@ -1,6 +1,6 @@
-// import Image from 'next/image';
+import Image from 'next/image';
 
-// import logo from '@/public/img/MovielandLogo.png';
+import logo from '@/public/img/logo.png';
 import LoginForm from "@/components/auth/login/Form";
 import Card from '@/components/common/Card';
 
@@ -11,14 +11,14 @@ export default function Login() {
         <Card>
           <div className="space-y-1">
             <div className='relative'>
-              {/* <Image
+              <Image
                 src={logo}
                 alt="Moveland logo"
-                width={300}
-                height={300}
-                className="mx-auto h-20 w-20"
-              /> */}
-              <h1 className="text-center text-xl font-medium text-gray-900">
+                width={80}
+                height={80}
+                className="mx-auto h-16 w-16"
+              />
+              <h1 className="text-center text-xl font-medium text-gray-900 mt-1">
                 <span className="font-extrabold">Moveland</span>
               </h1>
             </div>

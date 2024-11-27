@@ -16,8 +16,5 @@ type SignoutProps = {
 export const AUTH_EVENTS = {
   async signIn({ user, account }: SigninProps) {},
   async signOut(message: SignoutProps) {
-    // cookies().delete('authjs.callback-url');
-    // cookies().delete('authjs.csrf-token');
-    // cookies().delete('authjs.session-token');
   },
 };
