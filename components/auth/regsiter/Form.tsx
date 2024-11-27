@@ -1,5 +1,5 @@
 "use client";
-import { loginFormSchema } from "@/schema/login";
+import { registerFormSchema } from "@/schema/register";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
@@ -12,48 +12,82 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage
+  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { DEFAULT_LOGIN_REDIRECT_ROUTE } from "@/constant/routes";
-import { useOrigin } from "@/hooks/use-origin";
-import { toast } from "sonner";
-import { login } from "./action";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 
-export default function LoginForm() {
-  const [isPending, startTransition] = useTransition();
-  const origin = useOrigin();
-  const redirectUrl = `${origin}${DEFAULT_LOGIN_REDIRECT_ROUTE}`;
-  // Default 
-  const form = useForm<z.infer<typeof loginFormSchema>>({
-    resolver: zodResolver(loginFormSchema),
+export default function RegisterForm() {
+  const [isPending] = useTransition();
+  // Default
+  const form = useForm<z.infer<typeof registerFormSchema>>({
+    resolver: zodResolver(registerFormSchema),
     defaultValues: {
+      firstName: "",
+      lastName: "",
       email: "",
       password: "",
     },
   });
   // Submit function
-  const onSubmit = async (formData: z.infer<typeof loginFormSchema>) => {
-    startTransition(() => {
-      login(formData)
-        .then((data) => {
-          if (data?.error) {
-            form.reset();
-            toast.error(data?.error);
-          } else {
-            window.location.href = redirectUrl;
-          }
-        })
-        .catch((error) => toast.error(error?.error));
-    });
+  const onSubmit = async (formData: z.infer<typeof registerFormSchema>) => {
+    console.log("data.......", formData);
   };
 
   return (
     <Form {...form}>
-      <form className="mt-8 space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
-        <div>
+      <form
+        className="mt-8 space-y-4 gap-4 grid md:grid-cols-2 col-span-1"
+        onSubmit={form.handleSubmit(onSubmit)}
+      >
+        <div className="col-span-2 md:flex md:gap-4 md:space-y-0 space-y-4">
+          <div className="w-full">
+            <FormField
+              control={form.control}
+              name="firstName"
+              render={({ field }) => (
+                <FormItem className="space-y-1">
+                  <FormLabel className="block text-sm font-medium leading-6 text-gray-900">
+                    First name
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      className="block sm:leading-6 w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:!ring-xblue-600 sm:text-sm"
+                      placeholder="First Name"
+                      {...field}
+                      disabled={isPending}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="w-full">
+            <FormField
+              control={form.control}
+              name="lastName"
+              render={({ field }) => (
+                <FormItem className="space-y-1">
+                  <FormLabel className="block text-sm font-medium leading-6 text-gray-900">
+                    Last name
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      className="block sm:leading-6 w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:!ring-xblue-600 sm:text-sm"
+                      placeholder="First Name"
+                      {...field}
+                      disabled={isPending}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+        </div>
+
+        <div className="col-span-2">
           <FormField
             control={form.control}
             name="email"
@@ -64,7 +98,6 @@ export default function LoginForm() {
                 </FormLabel>
                 <FormControl>
                   <Input
-                    autoFocus
                     className="block sm:leading-6 w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:!ring-xblue-600 sm:text-sm"
                     placeholder="name@example.com"
                     {...field}
@@ -77,7 +110,7 @@ export default function LoginForm() {
           />
         </div>
 
-        <div>
+        <div className="col-span-2">
           <FormField
             control={form.control}
             name="password"
@@ -100,27 +133,27 @@ export default function LoginForm() {
           />
         </div>
 
-        <div>
+        <div className="col-span-2">
           <Button
             type="submit"
             className="flex w-full items-center justify-center rounded-md bg-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 disabled:cursor-not-allowed"
             disabled={isPending}
           >
             {!isPending ? (
-              "Sign in"
+              "Sign Up"
             ) : (
               <Loader className="my-0.5 h-5 w-5 animate-spin" />
             )}
           </Button>
         </div>
         <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-        Don’t have an account yet?{" "}
-          <Link
-            href="/auth/register"
+          Already have an account?{" "}
+          <a
+            href="/auth/login"
             className="font-medium text-primary hover:text-primary-dark dark:text-primary-500"
           >
-            Sign up
-          </Link>
+            Login here
+          </a>
         </p>
       </form>
     </Form>
