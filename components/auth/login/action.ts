@@ -3,7 +3,7 @@
 import { signIn } from '@/auth';
 import { LOGIN_ROUTE } from '@/constant/routes';
 import { loginFormSchema } from '@/schema/login';
-import { AuthError } from 'next-auth';
+// import AuthError  from 'next-auth';
 import * as z from 'zod';
 
 export const login = async (formData: z.infer<typeof loginFormSchema>) => {
@@ -37,8 +37,8 @@ export const login = async (formData: z.infer<typeof loginFormSchema>) => {
       redirect: false,
       callbackUrl: LOGIN_ROUTE,
     });
-  } catch (error) {
-    if (error instanceof AuthError) {
+  } catch (error:any) {
+    if (error) {
       switch (error.type) {
         case 'CredentialsSignin':
           return { error: 'Invalid credentials!' };
