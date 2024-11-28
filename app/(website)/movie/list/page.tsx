@@ -1,6 +1,7 @@
-import MoveList from "@/components/movie/MoveList";
+import MovieList from "@/components/movie/MovieList";
 import client from "@/lib/apolloClient";
 import { GET_COUNTRY } from "@/queries";
+import { Suspense } from "react";
 
 export default async function Page() {
   const { data } = await client.query({
@@ -9,8 +10,8 @@ export default async function Page() {
 
   console.log("Fetched Data:", data);;
   return (
-    <div>
-      <MoveList />
-    </div>
+    <Suspense fallback={<div>Loading...</div>}>
+      <MovieList />
+    </Suspense>
   );
 }
