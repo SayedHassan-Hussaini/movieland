@@ -13,13 +13,13 @@ export default function Login() {
             <div className='relative'>
               <Image
                 src={logo}
-                alt="Moveland logo"
+                alt="movieland logo"
                 width={80}
                 height={80}
                 className="mx-auto h-16 w-16"
               />
               <h1 className="text-center text-xl font-medium text-gray-900 mt-1">
-                <span className="font-extrabold">Moveland</span>
+                <span className="font-extrabold">movieland</span>
               </h1>
             </div>
             <h2 className="text-center text-base font-bold text-gray-900">

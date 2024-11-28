@@ -5,7 +5,7 @@ import VideoPlayer from "../common/VideoPlayer";
 import { StarIcon } from "lucide-react";
 import CardItemsSkeleton from "../common/CardItemsSkeleton";
 
-export default function MoveDetails() {
+export default function MovieDetails() {
   const [move, setMove] = useState<any>([]);
   const moveData = move?.[0];
 

@@ -1,7 +1,7 @@
 "use client";
 
 import Pagination from "../common/Pagination";
-import MoveCard from "./MoveCard";
+import MoveCard from "./MovieCard";
 import { useEffect, useState,useId } from "react";
 import { useCurrentPage } from "@/hooks/useCurrentPage";
 import SearchForm from "../common/SearchFrom";
@@ -23,7 +23,7 @@ export default function MoveList() {
   return (
     <div className="mx-auto max-w-7xl px-5 py-10">
       <div className="md:flex md:justify-between md:items-center mb-10 space-y-4">
-        <h1 className="text-3xl font-bold">Move List</h1>
+        <h1 className="text-3xl font-bold">Movie List</h1>
         <div className="min-w-[300px]">
           <SearchForm />
         </div>

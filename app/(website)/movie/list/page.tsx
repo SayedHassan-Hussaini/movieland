@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import MoveList from "@/components/move/MoveList";
+import MoveList from "@/components/movie/MoveList";
 
 export default function Page() {
   return (

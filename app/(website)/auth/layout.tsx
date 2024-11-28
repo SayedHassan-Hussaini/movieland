@@ -1,7 +1,7 @@
 import { LayoutProps } from "@/types";
 
 export const metadata = {
-  title: 'Moveland | Login',
+  title: 'movieland | Login',
 };
 
 export default function RootLayout({ children }: LayoutProps) {

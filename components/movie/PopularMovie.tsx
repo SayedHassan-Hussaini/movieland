@@ -1,11 +1,11 @@
 "use client";
 
-import MoveCard from "./MoveCard";
+import MoveCard from "./MovieCard";
 import { useEffect, useState } from "react";
 import { useCurrentPage } from "@/hooks/useCurrentPage";
 import CardItemsSkeleton from "../common/CardItemsSkeleton";
 
-export default function PopularMove() {
+export default function PopularMovie() {
   const [move, setMove] = useState<any>([]);
 
   // get current page

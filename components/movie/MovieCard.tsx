@@ -2,7 +2,7 @@ import Image from "next/image";
 import { StarIcon } from "lucide-react";
 import Link from "next/link";
 
-export default function MoveCard({ moveData }: { moveData: any }) {
+export default function MovieCard({ moveData }: { moveData: any }) {
   console.log("moveData.........", moveData);
   return (
     <Link href={`/move/${moveData?.movie_id}`}>
