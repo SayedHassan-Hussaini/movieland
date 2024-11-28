@@ -1,12 +1,8 @@
-"use client";
-
 
 import localFont from "next/font/local";
 import "../globals.css";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
-import { ApolloProvider } from "@apollo/client";
-import client from "../../lib/apolloClient";
 
 const geistSans = localFont({
   src: "../fonts/GeistVF.woff",
@@ -19,8 +15,6 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
-
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -31,11 +25,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ApolloProvider client={client}>
           <Header />
           <div className="bg-[#f9f7f8]">{children}</div>
           <Footer />
-        </ApolloProvider>
       </body>
     </html>
   );
