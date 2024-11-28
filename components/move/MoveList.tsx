@@ -2,7 +2,7 @@
 
 import Pagination from "../common/Pagination";
 import MoveCard from "./MoveCard";
-import { useEffect, useState } from "react";
+import { useEffect, useState,useId } from "react";
 import { useCurrentPage } from "@/hooks/useCurrentPage";
 import SearchForm from "../common/SearchFrom";
 import CardItemsSkeleton from "../common/CardItemsSkeleton";
@@ -10,6 +10,7 @@ import CardItemsSkeleton from "../common/CardItemsSkeleton";
 export default function MoveList() {
   const [move, setMove] = useState<any>([]);
   const moveData = move?.data || [];
+  const keyId=useId()
   // get current page
   const currentPage = useCurrentPage();
   // Fetch move data from a public API
@@ -21,7 +22,7 @@ export default function MoveList() {
 
   return (
     <div className="mx-auto max-w-7xl px-5 py-10">
-      <div className="flex justify-between items-center mb-10">
+      <div className="md:flex md:justify-between md:items-center mb-10 space-y-4">
         <h1 className="text-3xl font-bold">Move List</h1>
         <div className="min-w-[300px]">
           <SearchForm />
@@ -31,7 +32,7 @@ export default function MoveList() {
         <>
           <div className="grid grid-cols-4 gap-4">
             {moveData.map((item: any) => (
-              <div key={item?.movie_id} className="md:col-span-1 col-span-4">
+              <div key={item?.movie_id + keyId} className="md:col-span-1 col-span-4">
                 <MoveCard moveData={item} />
               </div>
             ))}
