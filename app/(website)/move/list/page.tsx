@@ -1,4 +1,10 @@
+import { Suspense } from "react";
 import MoveList from "@/components/move/MoveList";
+
 export default function Page() {
-  return <MoveList />;
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <MoveList />
+    </Suspense>
+  );
 }
