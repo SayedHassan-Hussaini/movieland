@@ -15,3 +15,17 @@ export const GET_COUNTRY = gql`
     }
   }
 `;
+export const GET_MOVIES = gql`
+  query getMovies($page: Int) {
+    movies(page: $page) {
+      id
+      description
+      featured_image
+      genre
+      imdb_score
+      video_url
+      title
+      released_year
+    }
+  }
+`;
