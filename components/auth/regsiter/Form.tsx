@@ -35,10 +35,8 @@ export default function RegisterForm() {
   );
   // Submit function
   const onSubmit = async (formData: z.infer<typeof registerFormSchema>) => {
-    console.log("data.......", formData);
     try {
       const response = await signup({ variables: formData });
-      console.log("response.........", response);
     } catch (err) {
       console.log("err.........", err);
     }

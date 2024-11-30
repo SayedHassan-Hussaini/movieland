@@ -16,7 +16,7 @@ export default function PopularMovie() {
       .then((response) => response.json())
       .then((data) => setMove(data));
   }, [currentPage]);
-  console.log("move............", move);
+  // console.log("move............", move);
   return (
     <div className="space-y-5">
       <h1 className="text-2xl font-bold">Popular Move</h1>

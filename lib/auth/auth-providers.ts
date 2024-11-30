@@ -20,7 +20,6 @@ export const AUTH_PROVIDERS = [
           mutation: SIGNIN_MUTATION,
           variables: { email, password },
         });
-        console.log("login in auth-provider page",response)
         if (response?.errors) {
           return null;
         }

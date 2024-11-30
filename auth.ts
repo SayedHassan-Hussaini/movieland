@@ -11,7 +11,3 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   debug: process.env.NODE_ENV !== 'production',
 });
-export const handler = {
-  GET: handlers,
-  POST: handlers,
-};

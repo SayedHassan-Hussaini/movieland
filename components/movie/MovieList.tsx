@@ -2,7 +2,7 @@
 
 import Pagination from "../common/Pagination";
 import MoveCard from "./MovieCard";
-import { useEffect, useState,useId } from "react";
+import { useEffect, useState, useId } from "react";
 import { useCurrentPage } from "@/hooks/useCurrentPage";
 import SearchForm from "../common/SearchFrom";
 import CardItemsSkeleton from "../common/CardItemsSkeleton";
@@ -10,15 +10,15 @@ import CardItemsSkeleton from "../common/CardItemsSkeleton";
 export default function MoveList() {
   const [move, setMove] = useState<any>([]);
   const moveData = move?.data || [];
-  const keyId=useId()
+  const keyId = useId();
   // get current page
-  const currentPage = useCurrentPage();
-  // Fetch move data from a public API
-  useEffect(() => {
-    fetch(`https://jsonfakery.com/movies/paginated?${currentPage}`)
-      .then((response) => response.json())
-      .then((data) => setMove(data));
-  }, [currentPage]);
+  // const currentPage = useCurrentPage();
+  // Fetch move data from a public APIs
+  // useEffect(() => {
+  //   fetch(`https://jsonfakery.com/movies/paginated?${currentPage}`)
+  //     .then((response) => response.json())
+  //     .then((data) => setMove(data));
+  // }, [currentPage]);
 
   return (
     <div className="mx-auto max-w-7xl px-5 py-10">
@@ -32,7 +32,10 @@ export default function MoveList() {
         <>
           <div className="grid grid-cols-4 gap-4">
             {moveData.map((item: any) => (
-              <div key={item?.movie_id + keyId} className="md:col-span-1 col-span-4">
+              <div
+                key={item?.movie_id + keyId}
+                className="md:col-span-1 col-span-4"
+              >
                 <MoveCard moveData={item} />
               </div>
             ))}
