@@ -6,7 +6,7 @@ import client from "@/lib/apolloClient";
 import { useEffect } from "react";
 import { LOGIN_ROUTE } from "@/constant/routes";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 export default function RootLayout({ children }: LayoutProps) {
   const { data: session }: any = useSession();

@@ -18,8 +18,12 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { SIGNUP_MUTATION } from "@/queries";
 import { useMutation } from "@apollo/client";
+import { DEFAULT_LOGIN_REDIRECT_ROUTE } from "@/constant/routes";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function RegisterForm() {
+  const router = useRouter();
   // Default
   const form = useForm<z.infer<typeof registerFormSchema>>({
     resolver: zodResolver(registerFormSchema),
@@ -30,13 +34,20 @@ export default function RegisterForm() {
     },
   });
   //
-  const [signup, { data, loading, error }] = useMutation<any, FormData>(
-    SIGNUP_MUTATION
-  );
+  const [signup, { loading }] = useMutation<any, any>(SIGNUP_MUTATION);
   // Submit function
   const onSubmit = async (formData: z.infer<typeof registerFormSchema>) => {
     try {
-      const response = await signup({ variables: formData });
+      await signup({ variables: formData });
+      const login = await signIn("credentials", {
+        email: formData.email,
+        password: formData.password,
+        redirect: false,
+      });
+      if (login?.status === 200) {
+        router.push(DEFAULT_LOGIN_REDIRECT_ROUTE);
+      } else {
+      }
     } catch (err) {
       console.log("err.........", err);
     }

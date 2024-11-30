@@ -2,7 +2,6 @@
 
 import { signOut } from "@/auth";
 import { cookies } from "next/headers";
-import { LOGIN_ROUTE } from "@/constant/routes";
 
 export const logout = async () => {
   try {
