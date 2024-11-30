@@ -2,23 +2,41 @@
 
 import Pagination from "../common/Pagination";
 import MoveCard from "./MovieCard";
-import { useEffect, useState, useId } from "react";
 import { useCurrentPage } from "@/hooks/useCurrentPage";
 import SearchForm from "../common/SearchFrom";
 import CardItemsSkeleton from "../common/CardItemsSkeleton";
+import { useQuery } from "@apollo/client";
+import { GET_MOVIES } from "@/queries";
 
 export default function MoveList() {
-  const [move, setMove] = useState<any>([]);
-  const moveData = move?.data || [];
-  const keyId = useId();
-  // get current page
-  // const currentPage = useCurrentPage();
-  // Fetch move data from a public APIs
-  // useEffect(() => {
-  //   fetch(`https://jsonfakery.com/movies/paginated?${currentPage}`)
-  //     .then((response) => response.json())
-  //     .then((data) => setMove(data));
-  // }, [currentPage]);
+  const currentPage = useCurrentPage();
+  const { data, loading, error } = useQuery(GET_MOVIES, {
+    variables: { page: currentPage },
+  });
+
+  if (loading) {
+    return (
+      <div className="mx-auto max-w-7xl px-5 py-10 grid grid-cols-4 gap-4">
+        {Array(12)
+          .fill(null)
+          .map((_, index) => (
+            <div key={index} className="md:col-span-1 col-span-4">
+              <CardItemsSkeleton />
+            </div>
+          ))}
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <p className="text-red-500 mx-auto max-w-7xl px-5 py-10">
+        Error: {error.message}
+      </p>
+    );
+  }
+
+  const moveData = data?.movies || [];
 
   return (
     <div className="mx-auto max-w-7xl px-5 py-10">
@@ -28,32 +46,21 @@ export default function MoveList() {
           <SearchForm />
         </div>
       </div>
-      {moveData?.length > 0 ? (
+      {moveData.length > 0 ? (
         <>
           <div className="grid grid-cols-4 gap-4">
             {moveData.map((item: any) => (
-              <div
-                key={item?.movie_id + keyId}
-                className="md:col-span-1 col-span-4"
-              >
+              <div key={item.id} className="md:col-span-1 col-span-4">
                 <MoveCard moveData={item} />
               </div>
             ))}
           </div>
           <div className="py-10">
-            <Pagination lastPage={move?.last_page || 0} />
+            <Pagination lastPage={2} />
           </div>
         </>
       ) : (
-        <div className="grid grid-cols-4 gap-4">
-          {Array(12)
-            .fill(1)
-            .map((item: any) => (
-              <div key={item?.movie_id} className="md:col-span-1 col-span-4">
-                <CardItemsSkeleton />
-              </div>
-            ))}
-        </div>
+        <p>No movies found.</p>
       )}
     </div>
   );

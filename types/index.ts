@@ -32,3 +32,13 @@ export interface LayoutProps {
     url: string;
     baseUrl: string;
   }
+  export interface Movie {
+    id:number,
+    description:string,
+    featured_image:string,
+    genre?:string,
+    imdb_score:number,
+    video_url?:string,
+    title:string
+    released_year:string | number
+  }
