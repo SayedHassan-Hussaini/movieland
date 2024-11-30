@@ -1,6 +1,14 @@
-const SearchForm = () => {
+const SearchForm = ({ onSearch }: { onSearch: (search: string) => void }) => {
   return (
-    <form className="max-w-md mx-auto">
+    <form
+      className="max-w-md mx-auto"
+      onSubmit={(e) => {
+        e.preventDefault();
+        const formData = new FormData(e.currentTarget);
+        const search = formData.get("search");
+        onSearch(`${search}`);
+      }}
+    >
       <label
         htmlFor="default-search"
         className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -27,6 +35,7 @@ const SearchForm = () => {
         </div>
         <input
           type="search"
+          name="search"
           id="default-search"
           className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-primary focus:border-primary dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary dark:focus:border-primary"
           placeholder="Search Mockups, Logos..."

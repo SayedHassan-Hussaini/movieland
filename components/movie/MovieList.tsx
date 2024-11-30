@@ -7,12 +7,17 @@ import SearchForm from "../common/SearchFrom";
 import CardItemsSkeleton from "../common/CardItemsSkeleton";
 import { useQuery } from "@apollo/client";
 import { GET_MOVIES } from "@/queries";
+import { useState } from "react";
 
 export default function MoveList() {
   const currentPage = useCurrentPage();
+  const [search, setSearch] = useState("");
   const { data, loading, error } = useQuery(GET_MOVIES, {
-    variables: { page: currentPage },
+    variables: { page: currentPage, search: search },
   });
+  const handelSearch = (value: string) => {
+    setSearch(value);
+  };
 
   if (loading) {
     return (
@@ -43,7 +48,7 @@ export default function MoveList() {
       <div className="md:flex md:justify-between md:items-center mb-10 space-y-4">
         <h1 className="text-3xl font-bold">Movie List</h1>
         <div className="min-w-[300px]">
-          <SearchForm />
+          <SearchForm onSearch={handelSearch} />
         </div>
       </div>
       {moveData.length > 0 ? (
@@ -56,7 +61,7 @@ export default function MoveList() {
             ))}
           </div>
           <div className="py-10">
-            <Pagination lastPage={2} />
+            <Pagination lastPage={moveData?.length > 4 ? 2 : 1} />
           </div>
         </>
       ) : (

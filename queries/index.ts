@@ -30,8 +30,8 @@ export const SIGNUP_MUTATION = gql`
 `;
 // Get movie list 
 export const GET_MOVIES = gql`
-  query getMovies($page: Int) {
-    movies(page: $page) {
+      query($page: Int, $search: String){
+     movies (page: $page,search: $search){
       id
       description
       featured_image
