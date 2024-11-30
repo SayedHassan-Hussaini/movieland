@@ -1,15 +1,12 @@
 import * as zod from 'zod';
 
 export const registerFormSchema = zod.object({
-    firstName: zod
+    name: zod
     .string()
-    .min(1, { message: 'Please enter your first name' }),
-    lastName: zod
-    .string()
-    .min(1, { message: 'Please enter your last name' }),
+    .min(3, { message: 'Please enter your first name' }),
   email: zod
     .string()
-    .min(1, { message: 'Please enter your email' })
+    .min(3, { message: 'Please enter your email' })
     .email({ message: 'Invalid email address' }),
   password: zod
     .string()

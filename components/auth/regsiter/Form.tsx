@@ -16,22 +16,32 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { SIGNUP_MUTATION } from "@/queries";
+import { useMutation } from "@apollo/client";
 
 export default function RegisterForm() {
-  const [isPending] = useTransition();
   // Default
   const form = useForm<z.infer<typeof registerFormSchema>>({
     resolver: zodResolver(registerFormSchema),
     defaultValues: {
-      firstName: "",
-      lastName: "",
+      name: "",
       email: "",
       password: "",
     },
   });
+  //
+  const [signup, { data, loading, error }] = useMutation<any, FormData>(
+    SIGNUP_MUTATION
+  );
   // Submit function
   const onSubmit = async (formData: z.infer<typeof registerFormSchema>) => {
     console.log("data.......", formData);
+    try {
+      const response = await signup({ variables: formData });
+      console.log("response.........", response);
+    } catch (err) {
+      console.log("err.........", err);
+    }
   };
 
   return (
@@ -44,40 +54,18 @@ export default function RegisterForm() {
           <div className="w-full">
             <FormField
               control={form.control}
-              name="firstName"
+              name="name"
               render={({ field }) => (
                 <FormItem className="space-y-1">
                   <FormLabel className="block text-sm font-medium leading-6 text-gray-900">
-                    First name
+                    Full name
                   </FormLabel>
                   <FormControl>
                     <Input
                       className="block sm:leading-6 w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:!ring-xblue-600 sm:text-sm"
                       placeholder="First Name"
                       {...field}
-                      disabled={isPending}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-          <div className="w-full">
-            <FormField
-              control={form.control}
-              name="lastName"
-              render={({ field }) => (
-                <FormItem className="space-y-1">
-                  <FormLabel className="block text-sm font-medium leading-6 text-gray-900">
-                    Last name
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      className="block sm:leading-6 w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:!ring-xblue-600 sm:text-sm"
-                      placeholder="last Name"
-                      {...field}
-                      disabled={isPending}
+                      disabled={loading}
                     />
                   </FormControl>
                   <FormMessage />
@@ -101,7 +89,7 @@ export default function RegisterForm() {
                     className="block sm:leading-6 w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:!ring-xblue-600 sm:text-sm"
                     placeholder="name@example.com"
                     {...field}
-                    disabled={isPending}
+                    disabled={loading}
                   />
                 </FormControl>
                 <FormMessage />
@@ -121,7 +109,7 @@ export default function RegisterForm() {
                 </div>
                 <FormControl>
                   <Input
-                    disabled={isPending}
+                    disabled={loading}
                     placeholder="********"
                     {...field}
                     className="block sm:leading-6 w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:!ring-xblue-600 sm:text-sm"
@@ -137,9 +125,9 @@ export default function RegisterForm() {
           <Button
             type="submit"
             className="flex w-full items-center justify-center rounded-md bg-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 disabled:cursor-not-allowed"
-            disabled={isPending}
+            disabled={loading}
           >
-            {!isPending ? (
+            {!loading ? (
               "Sign Up"
             ) : (
               <Loader className="my-0.5 h-5 w-5 animate-spin" />
