@@ -1,39 +1,44 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import VideoPlayer from "../common/VideoPlayer";
 import { StarIcon } from "lucide-react";
 import CardItemsSkeleton from "../common/CardItemsSkeleton";
+import { useQuery } from "@apollo/client";
+import { GET_MOVIE } from "@/queries";
+import { useParams } from "next/navigation";
 
 export default function MovieDetails() {
-  const [move, setMove] = useState<any>([]);
-  const moveData = move?.[0];
-
-  // Fetch move data from a public API
-  useEffect(() => {
-    fetch(`https://jsonfakery.com/movies/random/1`)
-      .then((response) => response.json())
-      .then((data) => setMove(data));
-  }, []);
+  const { movieId } = useParams();
+  const { data, loading } = useQuery(GET_MOVIE, {
+    variables: { movieId: movieId },
+  });
+  const movieData = data?.movie;
 
   return (
     <div>
-      {move?.length > 0 ? (
+      {!loading ? (
         <>
           <div>
-            <h1 className="text-2xl font-bold">{moveData?.original_title}</h1>
+            <h1 className="text-2xl font-bold">{movieData?.title}</h1>
             <div className="min-h-[400px]">
-              <VideoPlayer thumbnail={move?.[0]?.poster_path} classes="" />
+              <VideoPlayer
+                thumbnail={movieData?.featured_image}
+                videoUrl={
+                  movieData?.video_ur ||
+                  "https://apiwebsite.gmdirecthire.co.uk/uploads/FINAL_1_online_video_cutter_com_e134029077.mp4"
+                }
+                classes=""
+              />
             </div>
             <div className="p-3 space-y-3 ">
-              <p className="text-black/50">{moveData?.overview}</p>
+              <p className="text-black/50">{movieData?.description}</p>
               <div className="text-sm font-semibold flex gap-5">
                 <div className="flex items-center gap-2">
                   <StarIcon size={20} className="text-yellow-500" />
-                  <div className="">{moveData?.vote_count}</div>
+                  <div className="">{movieData?.imdb_score}</div>
                 </div>
                 {/* Date */}
-                <div>{moveData?.release_date}</div>
+                <div>{movieData?.released_year}</div>
               </div>
             </div>
           </div>

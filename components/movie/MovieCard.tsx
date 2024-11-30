@@ -4,8 +4,6 @@ import Link from "next/link";
 import { Movie } from "@/types";
 
 export default function MovieCard({ moveData }: { moveData: Movie }) {
-  console.log("moveData...........", moveData);
-
   return (
     <Link href={`/movie/${moveData?.id}`}>
       <div className="w-full shadow-md rounded-md cursor-pointer hover:scale-105 transition-all duration-500 bg-white">

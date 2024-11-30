@@ -1,4 +1,3 @@
-import SearchForm from "@/components/common/SearchFrom";
 import MovieDetails from "@/components/movie/MovieDetails";
 import PopularMovie from "@/components/movie/PopularMovie";
 export default function Page() {
@@ -8,7 +7,6 @@ export default function Page() {
         <MovieDetails />
       </div>
       <div className="pt-12 space-y-4">
-        <SearchForm />
         <PopularMovie />
       </div>
     </div>
