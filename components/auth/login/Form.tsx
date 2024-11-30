@@ -39,6 +39,7 @@ export default function LoginForm() {
     startTransition(() => {
       login(formData)
         .then((data) => {
+          console.log("login page data...........",data)
           if (data?.error) {
             form.reset();
             toast.error(data?.error);

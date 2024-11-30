@@ -1,5 +1,7 @@
 import { loginFormSchema } from '@/schema/login';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import client from '../apolloClient';
+import { SIGNIN_MUTATION } from '@/queries';
 
 export const AUTH_PROVIDERS = [
   CredentialsProvider({
@@ -14,25 +16,19 @@ export const AUTH_PROVIDERS = [
       if (validatedFormData.success) {
         const { email, password } = validatedFormData.data;
 
-        const res = await fetch(`${process.env.SERVER_API_URL}/login/`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-          },
-          body: JSON.stringify({ email, password }),
+        const response = await client.mutate({
+          mutation: SIGNIN_MUTATION,
+          variables: { email, password },
         });
-
-        const response = await res.json();
-
-        if (!response.token) {
+        console.log("login in auth-provider page",response)
+        if (response?.errors) {
           return null;
         }
 
         return {
-          id: response.id,        
-          email,                  
-          token: response.token, 
+          id: "id",        
+          email:email,                  
+          token: response.data?.signin, 
           // Add any other necessary user fields here
         };
       }

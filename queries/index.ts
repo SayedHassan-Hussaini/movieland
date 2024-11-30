@@ -29,6 +29,12 @@ export const GET_MOVIES = gql`
     }
   }
 `;
+// Sing in query
+export const SIGNIN_MUTATION = gql`
+  mutation($email: String!, $password: String!){
+  signin(email: $email, password: $password)
+}
+`;
 // Sing up user
 export const SIGNUP_MUTATION = gql`
   mutation Signup($name: String!, $email: String!, $password: String!) {

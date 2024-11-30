@@ -22,15 +22,17 @@ export const AUTH_CALLBACKS = {
     return baseUrl;
   },
   async jwt({ token, user }: any) {
+    console.log("in jwt........",token,user)
     if (user) {
       token.user = user;
     }
     return token;
   },
   async session({ session, token }: any) {
+    console.log("in session........",session,token)
     try {
       if (token && token?.user) {
-        session.user = token.user;
+        session.user = token?.user;
         session.accessToken = token?.user?.token;
         // delete session.user.accessToken;
       }
