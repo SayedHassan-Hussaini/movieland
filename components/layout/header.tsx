@@ -6,10 +6,17 @@ import { Menu } from "lucide-react";
 import { useEffect, useState } from "react";
 import MobileMenu from "./mobile-menu";
 import DesktopMenu from "./desktop-menu";
+import { useSession } from "next-auth/react";
+import { Button } from "../ui/button";
+import { logout } from "@/actions/logout";
+import { LOGIN_ROUTE } from "@/constant/routes";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
+  const { data: session }: any = useSession();
   const [mobileMenu, setMobileMenu] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const router = useRouter();
 
   const menu = [
     { id: 1, name: "Home", link: "/" },
@@ -17,6 +24,14 @@ export default function Header() {
     { id: 2, name: "About us", link: "/about-us" },
     { id: 5, name: "Contact us", link: "/contact-us" },
   ];
+  const handleSignout = async () => {
+    try {
+      await logout();
+      router.push(LOGIN_ROUTE);
+    } catch (error) {
+      router.push(LOGIN_ROUTE);
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -61,12 +76,23 @@ export default function Header() {
 
             <div className="flex items-center gap-4">
               <div className="md:flex sm:gap-4 hidden" dir="ltr">
-                <Link
-                  className="flex gap-2 items-center bg-primary hover:bg-primary-dark rounded-md px-5 h-10 text-sm font-medium text-white transition"
-                  href="/auth/login"
-                >
-                  Sing in
-                </Link>
+                {session?.accessToken ? (
+                  <Button
+                    onClick={() => {
+                      handleSignout();
+                    }}
+                    className="flex gap-2 items-center bg-primary hover:bg-primary-dark rounded-md px-5 h-10 text-sm font-medium text-white transition"
+                  >
+                    Logout
+                  </Button>
+                ) : (
+                  <Link
+                    className="flex gap-2 items-center bg-primary hover:bg-primary-dark rounded-md px-5 h-10 text-sm font-medium text-white transition"
+                    href="/auth/login"
+                  >
+                    Sing in
+                  </Link>
+                )}
               </div>
 
               <button
