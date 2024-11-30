@@ -14,4 +14,4 @@ export const API_AUTH_PREFIX: string = '/api/auth';
  * Default redirect after successful login
  *  * @type {string}
  */
-export const DEFAULT_LOGIN_REDIRECT_ROUTE: string = '/move-list';
+export const DEFAULT_LOGIN_REDIRECT_ROUTE: string = '/movie/list';

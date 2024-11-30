@@ -12,7 +12,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage
+  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { DEFAULT_LOGIN_REDIRECT_ROUTE } from "@/constant/routes";
@@ -26,7 +26,7 @@ export default function LoginForm() {
   const [isPending, startTransition] = useTransition();
   const origin = useOrigin();
   const redirectUrl = `${origin}${DEFAULT_LOGIN_REDIRECT_ROUTE}`;
-  // Default 
+  // Default
   const form = useForm<z.infer<typeof loginFormSchema>>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
@@ -39,7 +39,6 @@ export default function LoginForm() {
     startTransition(() => {
       login(formData)
         .then((data) => {
-          console.log("login page data...........",data)
           if (data?.error) {
             form.reset();
             toast.error(data?.error);
@@ -115,7 +114,7 @@ export default function LoginForm() {
           </Button>
         </div>
         <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-        Don’t have an account yet?{" "}
+          Don’t have an account yet?{" "}
           <Link
             href="/auth/register"
             className="font-medium text-primary hover:text-primary-dark dark:text-primary-500"
