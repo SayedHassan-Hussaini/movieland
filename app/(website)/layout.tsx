@@ -21,17 +21,19 @@ const geistMono = localFont({
 
 export default function RootLayout({
   children,
+  session,
 }: Readonly<{
   children: React.ReactNode;
+  session: any;
 }>) {
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <SessionProvider>
+        <SessionProvider session={session}>
           <ApolloProvider client={client}>
-          <Toaster />
+            <Toaster />
             <Header />
             <div className="bg-[#f9f7f8]">{children}</div>
             <Footer />

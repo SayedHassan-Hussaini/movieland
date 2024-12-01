@@ -17,9 +17,9 @@ export default function RootLayout({ children }: LayoutProps) {
       router.push(LOGIN_ROUTE);
     }
   }
-  useEffect(() => {
-    getSession()
-  }, []);
+  // useEffect(() => {
+  //   getSession()
+  // }, []);
 
   return <>{children}</>;
 }

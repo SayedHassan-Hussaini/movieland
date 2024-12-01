@@ -46,6 +46,7 @@ export default function RegisterForm() {
           password: formData.password,
           redirect: false,
         });
+        // Login user
         if (login?.status === 200) {
           router.push(DEFAULT_LOGIN_REDIRECT_ROUTE);
         } else {
@@ -54,7 +55,6 @@ export default function RegisterForm() {
         toast.error(res?.errors?.[0]?.message || "Error, Please try again!")
       }
     } catch (err) {
-      console.log("err..........",err)
       toast.error( "Error, Please try again!")
     }
   };

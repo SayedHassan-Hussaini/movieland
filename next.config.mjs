@@ -21,6 +21,11 @@ const nextConfig = {
       },
     ],
   },
+  env: {
+    AUTH_SECRET: process.env.AUTH_SECRET,
+    AUTH_URL: process.env.AUTH_URL,
+  },
+  reactStrictMode: true,
 };
 
 export default nextConfig;
