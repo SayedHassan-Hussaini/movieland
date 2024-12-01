@@ -19,7 +19,7 @@ export default function RootLayout({ children }: LayoutProps) {
   }
   useEffect(() => {
     getSession()
-  }, [session]);
+  }, []);
 
   return <>{children}</>;
 }
