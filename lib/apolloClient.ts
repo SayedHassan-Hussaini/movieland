@@ -11,12 +11,12 @@ const httpLink = new HttpLink({
 });
 
 // Add headers dynamically using setContext
-const authLink =  setContext(async (_, { headers }) => {
+const authLink = setContext(async(_, { headers }) => {
 
   return {
     headers: {
       ...headers,
-      Authorization: await getClientAccessToken()
+      Authorization: `Bearer ${await getClientAccessToken()}`
     },
   };
 });
