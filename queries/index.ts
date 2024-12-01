@@ -18,19 +18,19 @@ export const GET_COUNTRY = gql`
 
 // Sing in query
 export const SIGNIN_MUTATION = gql`
-  mutation ($email: String!, $password: String!) {
+  mutation signin($email: String!, $password: String!) {
     signin(email: $email, password: $password)
   }
 `;
 // Sing up user
 export const SIGNUP_MUTATION = gql`
-  mutation ($name: String!, $email: String!, $password: String!) {
+  mutation signup($name: String!, $email: String!, $password: String!) {
     signup(name: $name, email: $email, password: $password)
   }
 `;
 // Get movie list
 export const GET_MOVIES = gql`
-  query ($page: Int, $search: String) {
+  query movies($page: Int, $search: String) {
     movies(page: $page, search: $search) {
       id
       description
@@ -45,7 +45,7 @@ export const GET_MOVIES = gql`
 `;
 // Git single movie
 export const GET_MOVIE = gql`
-  query ($movieId: ID!) {
+  query movie($movieId: ID!) {
     movie(id: $movieId) {
       id
       description
