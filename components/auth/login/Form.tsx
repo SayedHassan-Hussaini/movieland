@@ -46,7 +46,9 @@ export default function LoginForm() {
             window.location.href = redirectUrl;
           }
         })
-        .catch((error) => toast.error(error?.error));
+        .catch((error) => {
+          toast.error(error?.error || "Invalid credentials!")
+        });
     });
   };
 

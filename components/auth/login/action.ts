@@ -18,7 +18,7 @@ export const login = async (formData: z.infer<typeof loginFormSchema>) => {
     const { email, password } = validatedFormData.data;
     const response = await client.mutate({
       mutation: SIGNIN_MUTATION,
-      variables: { email, password },
+      variables: { email:email, password:password },
     });
     if (response?.errors) {
       return {

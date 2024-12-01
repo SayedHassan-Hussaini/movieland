@@ -21,6 +21,7 @@ import { useMutation } from "@apollo/client";
 import { DEFAULT_LOGIN_REDIRECT_ROUTE } from "@/constant/routes";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export default function RegisterForm() {
   const router = useRouter();
@@ -38,18 +39,23 @@ export default function RegisterForm() {
   // Submit function
   const onSubmit = async (formData: z.infer<typeof registerFormSchema>) => {
     try {
-      await signup({ variables: formData });
-      const login = await signIn("credentials", {
-        email: formData.email,
-        password: formData.password,
-        redirect: false,
-      });
-      if (login?.status === 200) {
-        router.push(DEFAULT_LOGIN_REDIRECT_ROUTE);
-      } else {
+      const res = await signup({ variables: formData });
+      if (res?.data?.signup) {
+        const login = await signIn("credentials", {
+          email: formData.email,
+          password: formData.password,
+          redirect: false,
+        });
+        if (login?.status === 200) {
+          router.push(DEFAULT_LOGIN_REDIRECT_ROUTE);
+        } else {
+        }
+      }else{
+        toast.error(res?.errors?.[0]?.message || "Error, Please try again!")
       }
     } catch (err) {
-      console.log("err.........", err);
+      console.log("err..........",err)
+      toast.error( "Error, Please try again!")
     }
   };
 

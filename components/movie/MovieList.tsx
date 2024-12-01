@@ -8,9 +8,11 @@ import CardItemsSkeleton from "../common/CardItemsSkeleton";
 import { useQuery } from "@apollo/client";
 import { GET_MOVIES } from "@/queries";
 import { useState } from "react";
+import { useSession } from "next-auth/react";
 
 export default function MoveList() {
   const currentPage = useCurrentPage();
+  const {data:session}=useSession()
   const [search, setSearch] = useState("");
   const { data, loading, error } = useQuery(GET_MOVIES, {
     variables: { page: currentPage, search: search },
@@ -61,7 +63,7 @@ export default function MoveList() {
             ))}
           </div>
           <div className="py-10">
-            <Pagination lastPage={moveData?.length > 4 ? 2 : 1} />
+            <Pagination lastPage={moveData?.length == 4 ? 2 : 1} />
           </div>
         </>
       ) : (
