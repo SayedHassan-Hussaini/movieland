@@ -18,13 +18,13 @@ export const GET_COUNTRY = gql`
 
 // Sing in query
 export const SIGNIN_MUTATION = gql`
-  mutation Signin($email: String!, $password: String!) {
+  mutation ($email: String!, $password: String!) {
     signin(email: $email, password: $password)
   }
 `;
 // Sing up user
 export const SIGNUP_MUTATION = gql`
-  mutation Signup($name: String!, $email: String!, $password: String!) {
+  mutation ($name: String!, $email: String!, $password: String!) {
     signup(name: $name, email: $email, password: $password)
   }
 `;
